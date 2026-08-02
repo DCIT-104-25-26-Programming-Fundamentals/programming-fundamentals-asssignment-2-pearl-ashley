@@ -71,5 +71,163 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <string>
 using namespace std;
+
+double add(double x, double y) {
+    return x + y;
+}
+
+double subtract(double x, double y) {
+    return x - y;
+}
+
+double multiply(double x, double y) {
+    return x * y;
+}
+
+double divide(double x, double y, bool &error) {
+    if (y == 0) {
+        error = true;
+        return 0;
+    }
+    error = false;
+    return x / y;
+}
+
+double calculateModulus(double x, double y, bool &error) {
+    if (y == 0) {
+        error = true;
+        return 0;
+    }
+    error = false;
+    return fmod(x, y);
+}
+
+double exponent(double x, double y) {
+    return pow(x, y);
+}
+
+void printFormatted(double val) {
+    if (val == (long long)val) {
+        cout << (long long)val;
+    } else {
+        cout << fixed << setprecision(2) << val;
+    }
+}
+
+int main() {
+    string choice;
+    while (true) {
+        cout << "\n============================" << endl;
+        cout << "     SIMPLE CALCULATOR" << endl;
+        cout << "============================" << endl;
+        cout << "1. Addition" << endl;
+        cout << "2. Subtraction" << endl;
+        cout << "3. Multiplication" << endl;
+        cout << "4. Division" << endl;
+        cout << "5. Modulus" << endl;
+        cout << "6. Exponentiation" << endl;
+        cout << "7. Quit" << endl;
+        cout << "Select an operation (1-7): ";
+        
+        getline(cin, choice);
+        if (choice == "7" || choice == "Quit" || choice == "quit") {
+            cout << "Goodbye!" << endl;
+            break;
+        }
+        
+        if (choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "5" && choice != "6") {
+            cout << "Error: Invalid choice. Please select 1-7." << endl;
+            continue;
+        }
+        
+        double num1, num2;
+        cout << "Enter first number : ";
+        if (!(cin >> num1)) {
+            cout << "Error: Please enter valid numerical values." << endl;
+            cin.clear();
+            string junk;
+            cin >> junk;
+            cin.ignore();
+            continue;
+        }
+        cout << "Enter second number: ";
+        if (!(cin >> num2)) {
+            cout << "Error: Please enter valid numerical values." << endl;
+            cin.clear();
+            string junk;
+            cin >> junk;
+            cin.ignore();
+            continue;
+        }
+        cin.ignore();
+        
+        if (choice == "1") {
+            double res = add(num1, num2);
+            cout << "Result: ";
+            printFormatted(num1);
+            cout << " + ";
+            printFormatted(num2);
+            cout << " = ";
+            printFormatted(res);
+            cout << endl;
+        } else if (choice == "2") {
+            double res = subtract(num1, num2);
+            cout << "Result: ";
+            printFormatted(num1);
+            cout << " - ";
+            printFormatted(num2);
+            cout << " = ";
+            printFormatted(res);
+            cout << endl;
+        } else if (choice == "3") {
+            double res = multiply(num1, num2);
+            cout << "Result: ";
+            printFormatted(num1);
+            cout << " * ";
+            printFormatted(num2);
+            cout << " = ";
+            printFormatted(res);
+            cout << endl;
+        } else if (choice == "4") {
+            bool error = false;
+            double res = divide(num1, num2, error);
+            if (error) {
+                cout << "Error: Cannot divide by zero." << endl;
+            } else {
+                cout << "Result: ";
+                printFormatted(num1);
+                cout << " / ";
+                printFormatted(num2);
+                cout << " = ";
+                cout << fixed << setprecision(2) << res << endl;
+            }
+        } else if (choice == "5") {
+            bool error = false;
+            double res = calculateModulus(num1, num2, error);
+            if (error) {
+                cout << "Error: Cannot divide by zero." << endl;
+            } else {
+                cout << "Result: ";
+                printFormatted(num1);
+                cout << " % ";
+                printFormatted(num2);
+                cout << " = ";
+                printFormatted(res);
+                cout << endl;
+            }
+        } else if (choice == "6") {
+            double res = exponent(num1, num2);
+            cout << "Result: ";
+            printFormatted(num1);
+            cout << " ^ ";
+            printFormatted(num2);
+            cout << " = ";
+            printFormatted(res);
+            cout << endl;
+        }
+    }
+    return 0;
+}
 

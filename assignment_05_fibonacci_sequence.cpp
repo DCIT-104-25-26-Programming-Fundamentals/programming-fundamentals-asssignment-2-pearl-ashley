@@ -49,5 +49,59 @@
 // =============================================================================
 
 #include <iostream>
+#include <vector>
 using namespace std;
+
+vector<long long> generateFibonacci(int n) {
+    if (n <= 0) return {};
+    vector<long long> result;
+    long long a = 0, b = 1;
+    for (int i = 0; i < n; i++) {
+        result.push_back(a);
+        long long temp = a + b;
+        a = b;
+        b = temp;
+    }
+    return result;
+}
+
+bool isFibonacciNumber(long long val) {
+    if (val < 0) return false;
+    long long a = 0, b = 1;
+    while (a < val) {
+        long long temp = a + b;
+        a = b;
+        b = temp;
+    }
+    return a == val;
+}
+
+int main() {
+    int n;
+    cout << "How many terms? ";
+    if (!(cin >> n) || n <= 0) {
+        cout << "Error: The number of terms must be a positive integer." << endl;
+        return 0;
+    }
+
+    vector<long long> sequence = generateFibonacci(n);
+    cout << "Fibonacci sequence: ";
+    for (size_t i = 0; i < sequence.size(); i++) {
+        cout << sequence[i] << (i + 1 == sequence.size() ? "" : " ");
+    }
+    cout << endl << endl;
+
+    long long checkNum;
+    cout << "Enter a number to check: ";
+    if (cin >> checkNum) {
+        if (isFibonacciNumber(checkNum)) {
+            cout << checkNum << " is a Fibonacci number." << endl;
+        } else {
+            cout << checkNum << " is NOT a Fibonacci number." << endl;
+        }
+    } else {
+        cout << "Error: Please enter a valid integer." << endl;
+    }
+    return 0;
+}
 
